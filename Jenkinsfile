@@ -17,7 +17,8 @@ pipeline {
             steps {
                 // Checkout the code from the Git repository
                 sh 'echo test 3'
-                sh 'git checkout main'
+//                 sh 'git checkout main'
+                checkout scm
                 sh 'sudo gpasswd -a jenkins docker'
                 sh 'sudo usermod -aG docker jenkins'
             }
