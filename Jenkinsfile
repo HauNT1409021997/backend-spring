@@ -4,13 +4,11 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'haunt14'  // Your Docker registry (without https://)
         DOCKER_IMAGE_NAME_JAVA = 'jenkin-docker-java-backend'  // Your Docker image name
-        DOCKER_IMAGE_NAME_JENKIN_MASTER = 'jenkin-docker-jenkins-master'  // Your Docker image name
-        DOCKER_IMAGE_NAME_POSTGRES = 'postgres'  // Your Docker image name
         DOCKER_CREDENTIALS = '0385934297'  // Jenkins credentials ID for Docker login
     }
 
     parameters {
-        string(name: 'AGENT_LABEL', defaultValue: 'java-slave-d1c2e3e2', description: 'The label of the Jenkins agent to use')
+        string(name: 'AGENT_LABEL', defaultValue: 'java-agent', description: 'The label of the Jenkins agent to use')
     }
 
     stages {
@@ -19,7 +17,7 @@ pipeline {
             steps {
                 // Checkout the code from the Git repository
                 sh 'echo test 3'
-                sh 'git checkout master'
+                sh 'git checkout main'
                 sh 'sudo gpasswd -a jenkins docker'
                 sh 'sudo usermod -aG docker jenkins'
             }
@@ -61,22 +59,6 @@ pipeline {
                                 customImageJava.push("${env.GIT_COMMIT_ID}")  // Push commit ID tagged image
                                 customImageJava.push("latest")  // Optionally push "latest" tagged image
                                 echo 'Successfully pushed Java image'
-                            }
-                        },
-                        "Jenkins Master Image": {
-                            docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS}") {
-                                def customImageJenkinMaster = docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME_JENKIN_MASTER}:${env.GIT_COMMIT_ID}")
-                                customImageJenkinMaster.push("${env.GIT_COMMIT_ID}")  // Push commit ID tagged image
-                                customImageJenkinMaster.push("latest")  // Optionally push "latest" tagged image
-                                echo 'Successfully pushed Jenkins Master image'
-                            }
-                        },
-                        "Postgres Image": {
-                            docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS}") {
-                                def customImageJenkinPostgres = docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME_POSTGRES}:${env.GIT_COMMIT_ID}")
-                                customImageJenkinPostgres.push("${env.GIT_COMMIT_ID}")  // Push commit ID tagged image
-                                customImageJenkinPostgres.push("latest")  // Optionally push "latest" tagged image
-                                echo 'Successfully pushed Postgres image'
                             }
                         }
                     ]
