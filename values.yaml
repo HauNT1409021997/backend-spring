@@ -1,0 +1,15 @@
+backend:
+  image:
+    repository: haunt14/jenkin-docker-java-backend:latest
+    tag: latest
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8080
+
+backendConfig:
+  environment:
+    DATABASE_URL: jdbc:postgresql://database:5432/test
+    DATABASE_USER: test
+    DATABASE_PASSWORD: 123
+

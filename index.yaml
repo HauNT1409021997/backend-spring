@@ -1,0 +1,54 @@
+apiVersion: v1
+entries:
+  backend:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-11-20T18:28:28.3355551+07:00"
+    dependencies:
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 12.2.4
+    description: A Helm chart for deploying a backend app
+    digest: 932658d79038195c7eec001a99b28342cdea5314c3001ea162922f36ce8aef83
+    name: backend
+    type: application
+    urls:
+    - https://github.com/HauNT1409021997/backend-spring/backend-1.0.0.tgz
+    version: 1.0.0
+  postgresql:
+  - annotations:
+      category: Database
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 15.2.0
+    created: "2024-11-20T18:28:28.339706+07:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.2.4
+    description: PostgreSQL (Postgres) is an open source object-relational database
+      known for reliability and data integrity. ACID-compliant, it supports foreign
+      keys, joins, views, triggers and stored procedures.
+    digest: efc73ba72620af1e827455f32df8253bdec2154e648e7bcfaeb07af87f0f97a3
+    home: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
+    icon: https://bitnami.com/assets/stacks/postgresql/img/postgresql-stack-220x234.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    - replication
+    - cluster
+    maintainers:
+    - name: Bitnami
+      url: https://github.com/bitnami/charts
+    name: postgresql
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/postgresql
+    - https://www.postgresql.org/
+    urls:
+    - https://github.com/HauNT1409021997/backend-spring/charts/postgresql-12.2.4.tgz
+    version: 12.2.4
+generated: "2024-11-20T18:28:28.3255151+07:00"

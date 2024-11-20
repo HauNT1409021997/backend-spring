@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-app-backend
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: crud-app-backend
+  template:
+    metadata:
+      labels:
+        app: crud-app-backend
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: "{{ .Values.backendConfig.environment.DATABASE_URL }}"
+            - name: DATABASE_USER
+              value: "{{ .Values.backendConfig.environment.DATABASE_USER }}"
+            - name: DATABASE_PASSWORD
+              value: "{{ .Values.backendConfig.environment.DATABASE_PASSWORD }}"
