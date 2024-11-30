@@ -1,0 +1,57 @@
+backend:
+  metadata:
+    namespace: homework-week4
+  image:
+    name: backend
+    repository: haunt14/jenkin-docker-java-backend
+    tag: "20241124"
+  replicas: 1
+  service:
+    type: LoadBalancer
+    port: 8080
+  labels:
+    deploymentLabel: backend-deployment
+    serviceLabel: backend-service
+    appLabel: backend
+  configMap:
+    name: backend-config
+  containerPort: 8081
+  databaseConfig:
+      POSTGRES_HOST: "backend-app-postgresql"
+      POSTGRES_DB: "postgresqlDB"
+      POSTGRES_USER: "user01"
+      POSTGRES_PASSWORD: "123"
+
+helmHook:
+  name1: "cleanup-pvc"
+  image1: "bitnami/kubectl:latest"
+
+postgresql:
+  global:
+    postgresql:
+      auth:
+        postgresPassword: "db123"  # PostgreSQL admin password
+        username: "user01"       # Custom username
+        password: "123"            # Custom user password
+        database: "postgresqlDB"   # Database name
+  auth:
+    enablePostgresUser: true
+    postgresPassword: "db123"
+    username: "user01"
+    password: "123"
+    database: "postgresqlDB"
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 15.10.0-debian-12-r0
+  primary:
+    configuration:
+    service:
+      type: LoadBalancer
+      ports:
+        postgresql: 5432
+      nodePorts:
+        postgresql: "30000"
+
+
+

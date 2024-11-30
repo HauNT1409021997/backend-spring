@@ -1,26 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crud-app-backend
+  name: {{ .Values.backend.labels.deploymentLabel }}
+  namespace: {{ .Values.backend.metadata.namespace }}
 spec:
   replicas: {{ .Values.backend.replicas }}
   selector:
     matchLabels:
-      app: crud-app-backend
+      app: {{ .Values.backend.labels.appLabel }}
   template:
     metadata:
       labels:
-        app: crud-app-backend
+        app: {{ .Values.backend.labels.appLabel }}
     spec:
       containers:
-        - name: backend
+        - name: {{ .Values.backend.image.name }}
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.backend.containerPort }}
           env:
-            - name: DATABASE_URL
-              value: "{{ .Values.backendConfig.environment.DATABASE_URL }}"
-            - name: DATABASE_USER
-              value: "{{ .Values.backendConfig.environment.DATABASE_USER }}"
-            - name: DATABASE_PASSWORD
-              value: "{{ .Values.backendConfig.environment.DATABASE_PASSWORD }}"
+            - name: SERVER_PORT
+              value: "{{ .Values.backend.containerPort | default "8080" }}"
+            - name: POSTGRES_HOST
+              value: "{{ .Values.backend.databaseConfig.POSTGRES_HOST }}"
+            - name: POSTGRES_DB
+              value: "{{ .Values.backend.databaseConfig.POSTGRES_DB }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.backend.databaseConfig.POSTGRES_USER }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.backend.databaseConfig.POSTGRES_PASSWORD }}"

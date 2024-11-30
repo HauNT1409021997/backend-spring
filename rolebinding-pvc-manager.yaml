@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pvc-manager-binding
+  namespace: homework-week4
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: homework-week4
+roleRef:
+  kind: Role
+  name: pvc-manager  # Name of the role you created
+  apiGroup: rbac.authorization.k8s.io

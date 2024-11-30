@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.backend.configMap.name }}
+  namespace: {{ .Values.backend.metadata.namespace }}
+data:
+  APP_ENV: "local"
+  APP_NAME: "backend-app"

@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  # Specify the namespace where the permissions are needed
+  namespace: homework-week4
+  name: pvc-manager
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["list", "delete"]  # Adjust verbs as needed (list, get, create, delete)
